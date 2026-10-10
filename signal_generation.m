@@ -21,3 +21,24 @@ ylabel('Amplitude');
 title('50 Hz vs 100 Hz');
 legend("50 Hz","100Hz")
 grid on;
+
+
+% Frequency-domain analysis using FFT
+
+y = x1 + x2;              % Iki sinyali topluyoruz
+N = length(y);            % Toplam ornek sayisi
+
+Y = fft(y);               % Zaman domeninden frekans domenine gecis
+P2 = abs(Y/N);            % Iki tarafli genlik spektrumu
+
+P1 = P2(1:floor(N/2)+1);  % Pozitif frekanslari al
+P1(2:end-1) = 2*P1(2:end-1);
+
+freq = Fs*(0:floor(N/2))/N;
+
+figure;
+plot(freq, P1);
+xlabel('Frequency (Hz)');
+ylabel('Amplitude');
+title('FFT of 50 Hz + 100 Hz Signal');
+grid on;
